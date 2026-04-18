@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>妊娠確率計算ツール｜タイミング・年齢別に確率を診断</title>
+  <meta name="description" content="排卵日とタイミングの日付を入力するだけで妊娠確率を計算。年齢による確率補正・複数日タイミング対応。妊活中の方に役立つ無料ツールです。">
+  <link rel="canonical" href="https://ninshin-kakuritsu.vercel.app/">
+  <meta property="og:title" content="妊娠確率計算ツール｜タイミング・年齢別に確率を診断">
+  <meta property="og:description" content="排卵日とタイミング日を入力するだけで妊娠確率を診断。年齢補正・複数日対応の無料ツール。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ninshin-kakuritsu.vercel.app/">
+  <meta property="og:image" content="https://ninshin-kakuritsu.vercel.app/ogp.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Google tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3985655020038392" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "妊娠確率計算ツール",
+    "description": "排卵日・タイミング・年齢から妊娠確率を計算する無料ツール",
+    "url": "https://ninshin-kakuritsu.vercel.app/",
+    "applicationCategory": "HealthApplication",
+    "offers": { "@type": "Offer", "price": "0" }
+  }
+  </script>
+  <style>
+    :root {
+      --pink: #e88fa8;
+      --pink-light: #fde8ef;
+      --purple: #9b7ec8;
+      --purple-light: #f0ebf9;
+      --green: #7aba8a;
+      --green-light: #eaf6ed;
+      --orange: #e8963a;
+      --orange-light: #fdf0e0;
+      --text: #3d2b3d;
+      --text-light: #7a6a7a;
+      --bg: #fff9fb;
+      --white: #ffffff;
+      --radius: 16px;
+      --shadow: 0 4px 20px rgba(155,126,200,0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; line-height: 1.7; }
+    a { color: var(--purple); }
+
+    header { background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%); color: #fff; padding: 32px 20px 28px; text-align: center; }
+    header h1 { font-size: clamp(1.4rem, 4.5vw, 2rem); font-weight: 800; }
+    header p { margin-top: 8px; opacity: 0.92; font-size: 0.95rem; }
+
+    main { max-width: 680px; margin: 0 auto; padding: 24px 16px 48px; }
+
+    /* ── Card ── */
+    .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px; margin-bottom: 20px; }
+    .card h2 { font-size: 1.1rem; color: var(--purple); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+    /* ── Form ── */
+    label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+    input[type="date"], input[type="number"], select {
+      width: 100%; padding: 12px 14px; border: 2px solid #e8d8f0; border-radius: 10px;
+      font-size: 1rem; background: var(--bg); color: var(--text); outline: none; transition: border-color .2s;
+    }
+    input:focus, select:focus { border-color: var(--purple); }
+    .form-row { margin-bottom: 16px; }
+    .form-hint { font-size: 0.8rem; color: var(--text-light); margin-top: 4px; }
+
+    /* ── Method toggle ── */
+    .method-tabs { display: flex; gap: 8px; margin-bottom: 18px; }
+    .method-tab { flex: 1; padding: 10px; border: 2px solid #e8d8f0; border-radius: 10px; background: var(--bg); font-size: 0.88rem; font-weight: 600; cursor: pointer; text-align: center; transition: all .2s; color: var(--text-light); }
+    .method-tab.active { background: var(--purple); border-color: var(--purple); color: #fff; }
+
+    /* ── Calendar grid ── */
+    .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .cal-nav { background: none; border: 2px solid #e8d8f0; border-radius: 8px; width: 36px; height: 36px; cursor: pointer; font-size: 1.1rem; color: var(--purple); }
+    .cal-title { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .cal-day-label { text-align: center; font-size: 0.75rem; color: var(--text-light); padding: 4px 0; font-weight: 600; }
+    .cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.88rem; cursor: pointer; transition: all .2s; border: 2px solid transparent; }
+    .cal-day:hover:not(.empty):not(.ovulation) { background: var(--pink-light); }
+    .cal-day.selected { background: var(--pink); color: #fff; border-color: var(--pink); }
+    .cal-day.ovulation { background: var(--purple); color: #fff; font-weight: 700; }
+    .cal-day.fertile { background: var(--purple-light); }
+    .cal-day.empty { cursor: default; }
+    .cal-legend { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; font-size: 0.78rem; }
+    .cal-legend-item { display: flex; align-items: center; gap: 5px; }
+    .cal-legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+    /* ── Calculate button ── */
+    .calc-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--pink), var(--purple)); color: #fff; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 800; cursor: pointer; box-shadow: 0 6px 20px rgba(155,126,200,0.4); transition: transform .2s, box-shadow .2s; margin-top: 8px; }
+    .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(155,126,200,0.5); }
+    .calc-btn:active { transform: translateY(0); }
+
+    /* ── Result ── */
+    #result { display: none; }
+    .result-hero { border-radius: var(--radius); padding: 32px 24px; text-align: center; margin-bottom: 20px; }
+    .result-hero.high   { background: linear-gradient(135deg, #fde8ef, #f0ebf9); border: 3px solid var(--pink); }
+    .result-hero.medium { background: linear-gradient(135deg, #fdf0e0, #f0ebf9); border: 3px solid var(--orange); }
+    .result-hero.low    { background: linear-gradient(135deg, #f0ebf9, #eaf6ed); border: 3px solid var(--green); }
+    .result-hero.none   { background: #f5f5f5; border: 3px solid #ddd; }
+    .result-label { font-size: 0.9rem; color: var(--text-light); margin-bottom: 6px; }
+    .result-pct { font-size: clamp(3rem, 12vw, 5.5rem); font-weight: 900; line-height: 1; }
+    .result-pct.high   { color: var(--pink); }
+    .result-pct.medium { color: var(--orange); }
+    .result-pct.low    { color: var(--green); }
+    .result-pct.none   { color: #aaa; }
+    .result-rank { display: inline-block; padding: 6px 20px; border-radius: 50px; font-weight: 700; margin-top: 10px; font-size: 1rem; }
+    .result-rank.high   { background: var(--pink); color: #fff; }
+    .result-rank.medium { background: var(--orange); color: #fff; }
+    .result-rank.low    { background: var(--green); color: #fff; }
+    .result-rank.none   { background: #ccc; color: #fff; }
+    .result-comment { margin-top: 16px; font-size: 0.95rem; color: var(--text); }
+
+    .result-breakdown { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; margin-bottom: 20px; }
+    .result-breakdown h3 { font-size: 1rem; color: var(--purple); margin-bottom: 14px; }
+    .breakdown-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 0.88rem; }
+    .breakdown-date { min-width: 90px; font-weight: 600; }
+    .breakdown-bar-wrap { flex: 1; background: #f0e8f5; border-radius: 50px; height: 10px; overflow: hidden; }
+    .breakdown-bar { height: 100%; border-radius: 50px; background: linear-gradient(to right, var(--pink), var(--purple)); }
+    .breakdown-pct { min-width: 40px; text-align: right; font-weight: 700; color: var(--purple); }
+
+    .age-note { background: var(--purple-light); border-radius: 10px; padding: 12px 16px; font-size: 0.85rem; margin-bottom: 20px; }
+
+    /* ── Next steps ── */
+    .next-steps { background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; }
+    .next-steps h3 { font-size: 1rem; color: var(--green); margin-bottom: 12px; }
+    .next-steps ul { padding-left: 18px; font-size: 0.9rem; }
+    .next-steps li { margin-bottom: 6px; }
+
+    /* ── Banners ── */
+    .banner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
+    .banner-card { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px; text-decoration: none; border-top: 3px solid var(--pink); display: block; transition: transform .2s; }
+    .banner-card:hover { transform: translateY(-2px); text-decoration: none; }
+    .banner-card .icon { font-size: 1.6rem; }
+    .banner-card .title { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-top: 4px; }
+    .banner-card .desc  { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+
+    /* ── Ad ── */
+    .ad-slot { background: #f5f5f5; border-radius: 8px; padding: 8px; text-align: center; margin: 20px 0; min-height: 90px; }
+
+    footer { background: var(--purple-light); padding: 24px 16px; text-align: center; font-size: 0.78rem; color: var(--text-light); }
+    footer .disclaimer { background: var(--white); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; line-height: 1.6; }
+    footer a { color: var(--purple); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🌸 妊娠確率計算ツール</h1>
+  <p>タイミング・年齢・排卵日から妊娠確率を診断</p>
+</header>
+
+<main>
+
+  <!-- Ad: 上部 -->
+  <div class="ad-slot">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3985655020038392" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- Step 1: 排卵日の入力方法 -->
+  <div class="card">
+    <h2>📅 Step 1｜排卵日を入力</h2>
+    <div class="method-tabs">
+      <div class="method-tab active" id="tab-ovulation" onclick="switchTab('ovulation')">排卵日がわかる</div>
+      <div class="method-tab" id="tab-period" onclick="switchTab('period')">生理日から計算</div>
+    </div>
+
+    <div id="panel-ovulation">
+      <div class="form-row">
+        <label>排卵日（予定日）</label>
+        <input type="date" id="ovulation-date">
+        <p class="form-hint">排卵検査薬・基礎体温などで推測した日付</p>
+      </div>
+    </div>
+
+    <div id="panel-period" style="display:none">
+      <div class="form-row">
+        <label>最終生理開始日</label>
+        <input type="date" id="period-date">
+      </div>
+      <div class="form-row">
+        <label>生理周期（日数）</label>
+        <select id="cycle-days">
+          <option value="25">25日</option>
+          <option value="26">26日</option>
+          <option value="27">27日</option>
+          <option value="28" selected>28日（標準）</option>
+          <option value="29">29日</option>
+          <option value="30">30日</option>
+          <option value="31">31日</option>
+          <option value="32">32日</option>
+          <option value="33">33日</option>
+          <option value="35">35日</option>
+        </select>
+        <p class="form-hint">排卵日は「生理開始日＋（周期−14日）」で計算</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: 年齢 -->
+  <div class="card">
+    <h2>👤 Step 2｜年齢を入力</h2>
+    <div class="form-row">
+      <label>現在の年齢</label>
+      <input type="number" id="age-input" min="18" max="50" placeholder="例: 28" value="">
+      <p class="form-hint">年齢によって妊娠確率は変わります（35歳以降は自然に低下）</p>
+    </div>
+  </div>
+
+  <!-- Step 3: タイミングカレンダー -->
+  <div class="card">
+    <h2>💑 Step 3｜タイミングをとった日を選択</h2>
+    <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:14px;">カレンダーから日付をタップ（複数選択OK）</p>
+    <div class="cal-header">
+      <button class="cal-nav" onclick="changeMonth(-1)">‹</button>
+      <span class="cal-title" id="cal-title"></span>
+      <button class="cal-nav" onclick="changeMonth(1)">›</button>
+    </div>
+    <div class="cal-grid" id="cal-grid">
+      <div class="cal-day-label">日</div>
+      <div class="cal-day-label">月</div>
+      <div class="cal-day-label">火</div>
+      <div class="cal-day-label">水</div>
+      <div class="cal-day-label">木</div>
+      <div class="cal-day-label">金</div>
+      <div class="cal-day-label">土</div>
+    </div>
+    <div class="cal-legend">
+      <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--purple)"></div>排卵日</div>
+      <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--purple-light);border:1px solid var(--purple)"></div>妊娠可能期間</div>
+      <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--pink)"></div>選択した日</div>
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">✨ 妊娠確率を計算する</button>
+
+  <!-- Ad: 結果直前 -->
+  <div class="ad-slot" style="margin-top:20px;">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3985655020038392" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- Result -->
+  <div id="result">
+    <div class="result-hero" id="result-hero">
+      <div class="result-label">今周期の妊娠確率（推定）</div>
+      <div class="result-pct" id="result-pct">—</div>
+      <div><span class="result-rank" id="result-rank">—</span></div>
+      <div class="result-comment" id="result-comment"></div>
+    </div>
+
+    <div class="age-note" id="age-note" style="display:none"></div>
+
+    <div class="result-breakdown" id="result-breakdown" style="display:none">
+      <h3>📊 日別の確率内訳</h3>
+      <div id="breakdown-rows"></div>
+    </div>
+
+    <!-- Ad: 結果後 -->
+    <div class="ad-slot">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3985655020038392" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <div class="next-steps" id="next-steps"></div>
+
+    <!-- Ad: ネクストアクション後 -->
+    <div class="ad-slot">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3985655020038392" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </div>
+
+  <!-- 関連ツール -->
+  <div style="margin-top:28px;">
+    <div style="font-size:1rem;font-weight:700;color:var(--purple);margin-bottom:12px;">🔗 関連ツール</div>
+    <div class="banner-grid">
+      <a class="banner-card" href="https://hairan-keisan.vercel.app/">
+        <div class="icon">📆</div>
+        <div class="title">排卵日計算ツール</div>
+        <div class="desc">生理周期から排卵日・妊娠可能期間を計算</div>
+      </a>
+      <a class="banner-card" href="https://ninsin-keisan.vercel.app/">
+        <div class="icon">📅</div>
+        <div class="title">妊娠週数・出産予定日</div>
+        <div class="desc">陽性後すぐに週数と予定日を確認</div>
+      </a>
+      <a class="banner-card" href="https://ninpu-shokuhin-check.vercel.app/">
+        <div class="icon">🥗</div>
+        <div class="title">妊婦の食べ物OK・NG</div>
+        <div class="desc">妊娠初期から使える食材チェック</div>
+      </a>
+      <a class="banner-card" href="https://ninpu-ng-check.vercel.app/">
+        <div class="icon">🚫</div>
+        <div class="title">妊婦のNG行動チェック</div>
+        <div class="desc">妊娠中に避けるべき行動を確認</div>
+      </a>
+      <a class="banner-card" href="https://shussan-check.vercel.app/">
+        <div class="icon">✅</div>
+        <div class="title">出産準備チェックリスト</div>
+        <div class="desc">入院・準備グッズを週数別に確認</div>
+      </a>
+      <a class="banner-card" href="https://namae-compass.vercel.app/">
+        <div class="icon">✨</div>
+        <div class="title">赤ちゃんの名前コンパス</div>
+        <div class="desc">画数・イメージで名前を探す</div>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="disclaimer">
+    ※ 本ツールの計算結果は統計的な目安であり、医学的な診断ではありません。<br>
+    妊活・不妊治療については専門の医師・産婦人科にご相談ください。<br>
+    参考：<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kodomo/kodomo_kosodate/boshi-hoken/" target="_blank" rel="noopener">厚生労働省 母子保健</a>
+    ／<a href="https://www.jsog.or.jp/" target="_blank" rel="noopener">日本産科婦人科学会</a>
+  </div>
+  <p>© 2026 妊娠確率計算ツール</p>
+</footer>
+
+<script>
+// ── Data ──────────────────────────────────────────────
+const BASE_PROB = { '-5':5, '-4':10, '-3':15, '-2':25, '-1':33, '0':27, '1':8, '2':3 };
+const AGE_COEF = (age) => {
+  if (!age || age < 20) return 1.0;
+  if (age <= 24) return 1.00;
+  if (age <= 29) return 0.95;
+  if (age <= 34) return 0.85;
+  if (age <= 39) return 0.70;
+  if (age <= 44) return 0.50;
+  return 0.25;
+};
+const AGE_LABEL = (age) => {
+  if (!age) return null;
+  if (age <= 29) return null;
+  if (age <= 34) return `${age}歳は30代前半。確率は20代と比べ約15%低めですが、十分に妊娠可能な年齢です。`;
+  if (age <= 39) return `${age}歳は30代後半。自然妊娠の確率は低下しますが、多くの方が妊娠されています。早めに産婦人科に相談するのもおすすめです。`;
+  return `${age}歳は40代以上。自然妊娠の確率はかなり下がります。不妊治療の専門医へのご相談を検討ください。`;
+};
+
+const COMMENT = {
+  high:   '排卵に近いタイミングでタイミングがとれています！妊娠の可能性は十分あります。生理予定日を待ちましょう。',
+  medium: '妊娠可能な期間にタイミングがとれています。確率は中程度ですが可能性はあります。',
+  low:    '排卵日から少し離れたタイミングでした。今周期は可能性は低めですが、次のチャレンジに向けてリズムをつかんでいきましょう。',
+  none:   '今回入力されたタイミングは排卵期から外れている可能性があります。次の周期で排卵日をより正確に把握して再チャレンジしてみてください。',
+};
+const NEXT_STEPS = {
+  high: ['生理予定日（約2週間後）まで激しい運動・飲酒は避けると安心','生理予定日の翌日から妊娠検査薬が使えます','基礎体温を続けて記録しておきましょう','葉酸サプリを始めておくと◎'],
+  medium: ['基礎体温を毎日記録して排卵日を正確に把握しましょう','来周期は排卵日の1〜2日前を狙うとより確率アップ','妊娠検査薬は生理予定日の翌日以降に','心身のストレスも妊娠率に影響します、無理せずに'],
+  low: ['来周期は排卵検査薬を使って排卵日を特定しましょう','基礎体温グラフで低温期→高温期の切り替わりをチェック','サプリメント（葉酸・亜鉛）の継続を','妊活6ヶ月以上なら産婦人科へ相談するタイミングかも'],
+  none: ['排卵日の把握に排卵検査薬・基礎体温を活用しましょう','下の排卵日計算ツールで次の排卵予測日を確認してみて','焦らず、周期を記録しながら続けることが大切です'],
+};
+
+// ── Calendar state ────────────────────────────────────
+let calYear, calMonth;
+let selectedDates = new Set();
+let ovulationDateStr = '';
+
+function initCalendar() {
+  const today = new Date();
+  calYear = today.getFullYear();
+  calMonth = today.getMonth();
+  renderCal();
+}
+
+function toDateStr(y, m, d) {
+  return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+
+function getOvulationDate() {
+  const tab = document.querySelector('.method-tab.active').id;
+  if (tab === 'tab-ovulation') {
+    return document.getElementById('ovulation-date').value || '';
+  } else {
+    const p = document.getElementById('period-date').value;
+    const c = parseInt(document.getElementById('cycle-days').value);
+    if (!p) return '';
+    const d = new Date(p);
+    d.setDate(d.getDate() + c - 14);
+    return d.toISOString().slice(0, 10);
+  }
+}
+
+function renderCal() {
+  const grid = document.getElementById('cal-grid');
+  const labels = grid.querySelectorAll('.cal-day-label');
+  while (grid.children.length > 7) grid.removeChild(grid.lastChild);
+
+  document.getElementById('cal-title').textContent =
+    `${calYear}年${calMonth+1}月`;
+
+  const ov = getOvulationDate();
+  const fertile = new Set();
+  if (ov) {
+    const ovDate = new Date(ov);
+    for (let i = -5; i <= 2; i++) {
+      const d = new Date(ovDate);
+      d.setDate(d.getDate() + i);
+      fertile.add(d.toISOString().slice(0,10));
+    }
+  }
+
+  const first = new Date(calYear, calMonth, 1).getDay();
+  const days = new Date(calYear, calMonth+1, 0).getDate();
+
+  for (let i = 0; i < first; i++) {
+    const el = document.createElement('div');
+    el.className = 'cal-day empty';
+    grid.appendChild(el);
+  }
+  for (let d = 1; d <= days; d++) {
+    const ds = toDateStr(calYear, calMonth, d);
+    const el = document.createElement('div');
+    el.className = 'cal-day';
+    el.textContent = d;
+    if (ds === ov) el.classList.add('ovulation');
+    else if (fertile.has(ds)) el.classList.add('fertile');
+    if (selectedDates.has(ds)) el.classList.add('selected');
+    el.onclick = () => toggleDay(ds, el, ds === ov);
+    grid.appendChild(el);
+  }
+}
+
+function toggleDay(ds, el, isOv) {
+  if (isOv) return;
+  if (selectedDates.has(ds)) { selectedDates.delete(ds); el.classList.remove('selected'); }
+  else { selectedDates.add(ds); el.classList.add('selected'); }
+}
+
+function changeMonth(dir) {
+  calMonth += dir;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  if (calMonth < 0)  { calMonth = 11; calYear--; }
+  renderCal();
+}
+
+function switchTab(type) {
+  document.getElementById('tab-ovulation').classList.toggle('active', type === 'ovulation');
+  document.getElementById('tab-period').classList.toggle('active', type === 'period');
+  document.getElementById('panel-ovulation').style.display = type === 'ovulation' ? '' : 'none';
+  document.getElementById('panel-period').style.display = type === 'period' ? '' : 'none';
+  renderCal();
+}
+
+// ── Calculate ─────────────────────────────────────────
+function calculate() {
+  const ov = getOvulationDate();
+  if (!ov) { alert('排卵日（または生理日）を入力してください'); return; }
+  if (selectedDates.size === 0) { alert('タイミングをとった日をカレンダーで選択してください'); return; }
+
+  const age = parseInt(document.getElementById('age-input').value) || 0;
+  const coef = AGE_COEF(age);
+  const ovDate = new Date(ov);
+
+  let rows = [];
+  let combinedFail = 1;
+
+  selectedDates.forEach(ds => {
+    const d = new Date(ds);
+    const diff = Math.round((d - ovDate) / 86400000);
+    const key = String(diff);
+    const base = BASE_PROB[key] ?? (diff < -5 ? 2 : diff > 2 ? 1 : 0);
+    const adj = Math.round(base * coef);
+    rows.push({ ds, diff, pct: adj });
+    combinedFail *= (1 - adj / 100);
+  });
+
+  const total = Math.round((1 - combinedFail) * 100);
+  const rank = total >= 25 ? 'high' : total >= 12 ? 'medium' : total >= 4 ? 'low' : 'none';
+  const rankLabel = { high:'確率高め', medium:'確率中程度', low:'確率やや低め', none:'可能性は低め' }[rank];
+
+  // Hero
+  const hero = document.getElementById('result-hero');
+  hero.className = `result-hero ${rank}`;
+  const pctEl = document.getElementById('result-pct');
+  pctEl.textContent = `${total}%`;
+  pctEl.className = `result-pct ${rank}`;
+  const rankEl = document.getElementById('result-rank');
+  rankEl.textContent = rankLabel;
+  rankEl.className = `result-rank ${rank}`;
+  document.getElementById('result-comment').textContent = COMMENT[rank];
+
+  // Age note
+  const ageMsg = AGE_LABEL(age);
+  const ageNote = document.getElementById('age-note');
+  if (ageMsg) { ageNote.textContent = `💡 年齢補正あり：${ageMsg}`; ageNote.style.display = ''; }
+  else ageNote.style.display = 'none';
+
+  // Breakdown
+  rows.sort((a, b) => a.diff - b.diff);
+  const maxPct = Math.max(...rows.map(r => r.pct), 1);
+  const bEl = document.getElementById('breakdown-rows');
+  bEl.innerHTML = rows.map(r => {
+    const label = r.diff === 0 ? '排卵日当日' : r.diff < 0 ? `排卵日${Math.abs(r.diff)}日前` : `排卵日${r.diff}日後`;
+    return `<div class="breakdown-row">
+      <div class="breakdown-date">${r.ds.slice(5)}（${label}）</div>
+      <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${Math.round(r.pct/maxPct*100)}%"></div></div>
+      <div class="breakdown-pct">${r.pct}%</div>
+    </div>`;
+  }).join('');
+  document.getElementById('result-breakdown').style.display = '';
+
+  // Next steps
+  const ns = NEXT_STEPS[rank];
+  document.getElementById('next-steps').innerHTML =
+    `<h3>💡 次のアクション</h3><ul>${ns.map(s=>`<li>${s}</li>`).join('')}</ul>`;
+
+  // Show
+  document.getElementById('result').style.display = '';
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Refresh cal on date change ────────────────────────
+document.addEventListener('change', e => {
+  if (['ovulation-date','period-date','cycle-days'].includes(e.target.id)) renderCal();
+});
+
+initCalendar();
+</script>
+</body>
+</html>
