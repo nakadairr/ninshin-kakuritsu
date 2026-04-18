@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="UTF-8"><title>OGP Generator</title></head>
+<body>
+<canvas id="c" width="1200" height="630"></canvas>
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+const W = 1200, H = 630;
+
+// BG gradient
+const bg = ctx.createLinearGradient(0, 0, W, H);
+bg.addColorStop(0, '#fde8ef');
+bg.addColorStop(1, '#f0ebf9');
+ctx.fillStyle = bg;
+ctx.fillRect(0, 0, W, H);
+
+// Accent bar top
+const bar = ctx.createLinearGradient(0, 0, W, 0);
+bar.addColorStop(0, '#e88fa8');
+bar.addColorStop(1, '#9b7ec8');
+ctx.fillStyle = bar;
+ctx.fillRect(0, 0, W, 14);
+
+// Decorative circles
+ctx.globalAlpha = 0.08;
+ctx.fillStyle = '#9b7ec8';
+ctx.beginPath(); ctx.arc(1050, 120, 180, 0, Math.PI*2); ctx.fill();
+ctx.beginPath(); ctx.arc(150, 500, 140, 0, Math.PI*2); ctx.fill();
+ctx.globalAlpha = 1;
+
+// Emoji
+ctx.font = '110px serif';
+ctx.textAlign = 'center';
+ctx.fillText('🌸', 600, 200);
+
+// Title
+ctx.fillStyle = '#3d2b3d';
+ctx.font = 'bold 68px "Hiragino Kaku Gothic ProN", sans-serif';
+ctx.textAlign = 'center';
+ctx.fillText('妊娠確率計算ツール', 600, 320);
+
+// Subtitle
+ctx.fillStyle = '#9b7ec8';
+ctx.font = 'bold 34px "Hiragino Kaku Gothic ProN", sans-serif';
+ctx.fillText('タイミング × 年齢 × 排卵日で確率を診断', 600, 390);
+
+// Tags
+const tags = ['排卵日から計算', '年齢補正あり', '複数日対応', '無料'];
+const tagColors = ['#e88fa8', '#9b7ec8', '#7aba8a', '#e8963a'];
+const startX = 600 - (tags.length * 170) / 2 + 75;
+tags.forEach((tag, i) => {
+  const x = startX + i * 180;
+  ctx.fillStyle = tagColors[i];
+  ctx.beginPath();
+  ctx.roundRect(x - 75, 440, 160, 48, 24);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 22px "Hiragino Kaku Gothic ProN", sans-serif';
+  ctx.fillText(tag, x + 5, 470);
+});
+
+// URL
+ctx.fillStyle = '#7a6a7a';
+ctx.font = '24px "Hiragino Kaku Gothic ProN", sans-serif';
+ctx.fillText('ninshin-kakuritsu.vercel.app', 600, 570);
+
+// Download
+const a = document.createElement('a');
+a.download = 'ogp.png';
+a.href = c.toDataURL('image/png');
+a.click();
+</script>
+</body>
+</html>
