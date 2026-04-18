@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>妊娠確率計算ツール｜タイミング・年齢別に確率を診断</title>
-  <meta name="description" content="排卵日とタイミングの日付を入力するだけで妊娠確率を計算。年齢による確率補正・複数日タイミング対応。妊活中の方に役立つ無料ツールです。">
+  <title>妊娠確率計算ツール｜排卵日・年齢から妊娠の可能性をチェック</title>
+  <meta name="description" content="排卵日・タイミング・年齢を入力するだけで妊娠確率を計算。複数日対応・年齢補正あり。「今周期どのくらい可能性がある？」を妊活中の方がすぐ確認できる無料ツールです。">
   <link rel="canonical" href="https://ninshin-kakuritsu.vercel.app/">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
-  <meta property="og:title" content="妊娠確率計算ツール｜タイミング・年齢別に確率を診断">
+  <meta property="og:title" content="妊娠確率計算ツール｜排卵日・年齢から妊娠の可能性をチェック">
   <meta property="og:description" content="排卵日とタイミング日を入力するだけで妊娠確率を診断。年齢補正・複数日対応の無料ツール。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ninshin-kakuritsu.vercel.app/">
@@ -274,6 +274,9 @@
 
     <div class="next-steps" id="next-steps"></div>
 
+    <!-- 結果内インラインCTA -->
+    <div style="display:grid;gap:10px;margin-bottom:20px;" id="inline-cta"></div>
+
     <!-- Ad: ネクストアクション後 -->
     <div class="ad-slot">
       <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3985655020038392" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
@@ -351,10 +354,28 @@ const AGE_LABEL = (age) => {
 };
 
 const COMMENT = {
-  high:   '排卵に近いタイミングでタイミングがとれています！妊娠の可能性は十分あります。生理予定日を待ちましょう。',
-  medium: '妊娠可能な期間にタイミングがとれています。確率は中程度ですが可能性はあります。',
-  low:    '排卵日から少し離れたタイミングでした。今周期は可能性は低めですが、次のチャレンジに向けてリズムをつかんでいきましょう。',
-  none:   '今回入力されたタイミングは排卵期から外れている可能性があります。次の周期で排卵日をより正確に把握して再チャレンジしてみてください。',
+  high:   '妊娠の可能性は比較的高いタイミングです。特に排卵日前後はhCGの分泌が始まりやすく、確率がピークになります。生理予定日まで体を大切に過ごしましょう。',
+  medium: '妊娠可能な期間にタイミングがとれています。妊娠の可能性は十分あります。確率は中程度ですが、ゼロではありません。焦らず生理予定日を待ちましょう。',
+  low:    '妊娠の可能性は低めですが、ゼロではありません。排卵日から少し離れたタイミングでした。次の周期は排卵日をより正確に把握してチャレンジしてみましょう。',
+  none:   '今回のタイミングは排卵期から外れている可能性があります。妊娠の可能性は非常に低い状態です。次の周期で排卵日をより正確に把握することが大切です。',
+};
+const INLINE_CTA = {
+  high: [
+    { icon:'🔬', text:'妊娠検査薬はいつから使える？', href:'https://kentai-timing.vercel.app/', color:'var(--pink)' },
+    { icon:'📅', text:'陽性が出たら→妊娠週数・出産予定日を確認', href:'https://ninsin-keisan.vercel.app/', color:'var(--purple)' },
+  ],
+  medium: [
+    { icon:'📆', text:'次の排卵日をより正確に計算する', href:'https://hairan-keisan.vercel.app/', color:'var(--purple)' },
+    { icon:'🔬', text:'妊娠検査薬はいつから使える？', href:'https://kentai-timing.vercel.app/', color:'var(--pink)' },
+  ],
+  low: [
+    { icon:'📆', text:'排卵日をもっと正確に把握する→排卵日計算ツール', href:'https://hairan-keisan.vercel.app/', color:'var(--purple)' },
+    { icon:'🌡️', text:'基礎体温の見方・排卵日の特定方法', href:'https://hairan-keisan.vercel.app/kiso-taion/', color:'var(--green)' },
+  ],
+  none: [
+    { icon:'📆', text:'来周期に向けて→排卵日計算ツールで予測', href:'https://hairan-keisan.vercel.app/', color:'var(--purple)' },
+    { icon:'🌡️', text:'基礎体温の見方を知る', href:'https://hairan-keisan.vercel.app/kiso-taion/', color:'var(--green)' },
+  ],
 };
 const NEXT_STEPS = {
   high: ['生理予定日（約2週間後）まで激しい運動・飲酒は避けると安心','生理予定日の翌日から妊娠検査薬が使えます','基礎体温を続けて記録しておきましょう','葉酸サプリを始めておくと◎'],
@@ -516,6 +537,15 @@ function calculate() {
   const ns = NEXT_STEPS[rank];
   document.getElementById('next-steps').innerHTML =
     `<h3>💡 次のアクション</h3><ul>${ns.map(s=>`<li>${s}</li>`).join('')}</ul>`;
+
+  // Inline CTA
+  const ctas = INLINE_CTA[rank];
+  document.getElementById('inline-cta').innerHTML = ctas.map(c =>
+    `<a href="${c.href}" style="display:flex;align-items:center;gap:12px;background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:14px 18px;border-left:4px solid ${c.color};text-decoration:none;color:var(--text);">
+      <span style="font-size:1.5rem;">${c.icon}</span>
+      <span style="font-size:.92rem;font-weight:700;">${c.text} →</span>
+    </a>`
+  ).join('');
 
   // Show
   document.getElementById('result').style.display = '';

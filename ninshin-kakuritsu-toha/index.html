@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>妊娠確率とは？排卵日・年齢・タイミング別の目安を徹底解説</title>
+  <meta name="description" content="妊娠確率とは何か、排卵日との関係・年齢による変化・1周期あたりの確率を医学的根拠をもとに解説。「どのくらいで妊娠できるの？」という疑問に答えます。">
+  <link rel="canonical" href="https://ninshin-kakuritsu.vercel.app/ninshin-kakuritsu-toha/">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+  <meta property="og:title" content="妊娠確率とは？排卵日・年齢・タイミング別の目安を徹底解説">
+  <meta property="og:description" content="妊娠確率と排卵日の関係・年齢別の変化・1周期あたりの確率を解説。妊活中の方必読。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ninshin-kakuritsu.vercel.app/ninshin-kakuritsu-toha/">
+  <meta property="og:image" content="https://ninshin-kakuritsu.vercel.app/ogp.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z03PCXXMC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7Z03PCXXMC');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3985655020038392" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "妊娠確率とは？排卵日・年齢・タイミング別の目安を徹底解説",
+    "description": "妊娠確率と排卵日の関係・年齢別の変化・1周期あたりの確率を解説。",
+    "url": "https://ninshin-kakuritsu.vercel.app/ninshin-kakuritsu-toha/",
+    "datePublished": "2026-04-18",
+    "publisher": { "@type": "Organization", "name": "妊娠確率計算ツール" }
+  }
+  </script>
+  <style>
+    :root {
+      --pink: #e88fa8; --pink-light: #fde8ef;
+      --purple: #9b7ec8; --purple-light: #f0ebf9;
+      --green: #7aba8a; --green-light: #eaf6ed;
+      --orange: #e8963a; --orange-light: #fdf0e0;
+      --text: #3d2b3d; --text-light: #7a6a7a;
+      --bg: #fff9fb; --white: #fff;
+      --radius: 16px; --shadow: 0 4px 20px rgba(155,126,200,0.10);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif; line-height: 1.7; }
+    a { color: var(--purple); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header { background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%); color: #fff; padding: 32px 20px 28px; text-align: center; }
+    header h1 { font-size: clamp(1.3rem,4vw,1.9rem); font-weight: 700; line-height: 1.4; }
+    header p { margin-top: 8px; opacity: .92; font-size: .95rem; }
+    .breadcrumb { background: var(--purple-light); padding: 10px 20px; font-size: .8rem; color: var(--text-light); }
+    .breadcrumb a { color: var(--purple); }
+
+    main { max-width: 740px; margin: 0 auto; padding: 24px 16px 40px; }
+
+    .toc { background: var(--purple-light); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 32px; }
+    .toc h2 { font-size: 1rem; color: var(--purple); margin-bottom: 12px; }
+    .toc ol { padding-left: 20px; }
+    .toc li { margin-bottom: 6px; font-size: .9rem; }
+
+    h2 { font-size: clamp(1.1rem,3vw,1.4rem); color: var(--purple); margin: 36px 0 16px; border-left: 4px solid var(--pink); padding-left: 12px; }
+    h3 { font-size: 1.05rem; color: var(--text); margin: 22px 0 10px; font-weight: 700; }
+    p { margin-bottom: 14px; font-size: .97rem; }
+
+    .summary-box { background: var(--pink-light); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 28px; }
+    .summary-box p { margin: 0; font-size: .95rem; }
+
+    /* Timing chart */
+    .timing-chart { margin: 16px 0 28px; }
+    .timing-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .timing-day { min-width: 100px; font-size: .88rem; font-weight: 600; }
+    .timing-bar-wrap { flex: 1; background: #eee; border-radius: 50px; height: 28px; overflow: hidden; display: flex; align-items: center; }
+    .timing-bar { height: 100%; border-radius: 50px; display: flex; align-items: center; padding-left: 10px; font-size: .82rem; color: #fff; font-weight: 700; transition: width .6s; }
+    .timing-pct { min-width: 40px; text-align: right; font-size: .88rem; font-weight: 700; color: var(--purple); }
+
+    /* Age table */
+    .age-table { width: 100%; border-collapse: collapse; margin: 16px 0 28px; font-size: .9rem; }
+    .age-table th { background: var(--purple); color: #fff; padding: 10px 14px; text-align: left; }
+    .age-table td { padding: 10px 14px; border-bottom: 1px solid #f0e8f5; }
+    .age-table tr:nth-child(even) td { background: var(--purple-light); }
+    .bar-mini { display: inline-block; height: 10px; border-radius: 50px; vertical-align: middle; margin-left: 8px; }
+
+    /* Cycle table */
+    .cycle-table { width: 100%; border-collapse: collapse; margin: 16px 0 28px; font-size: .9rem; }
+    .cycle-table th { background: var(--pink); color: #fff; padding: 10px 14px; text-align: left; }
+    .cycle-table td { padding: 10px 14px; border-bottom: 1px solid #fde8ef; }
+    .cycle-table tr:nth-child(even) td { background: var(--pink-light); }
+
+    .cta-box { background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%); border-radius: var(--radius); padding: 28px 24px; text-align: center; margin: 36px 0; color: #fff; }
+    .cta-box p { margin-bottom: 16px; font-size: 1rem; }
+    .cta-btn { display: inline-block; background: #fff; color: var(--purple); font-weight: 700; padding: 14px 32px; border-radius: 50px; font-size: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,.15); transition: transform .2s; }
+    .cta-btn:hover { transform: translateY(-2px); text-decoration: none; }
+
+    .info-box { background: var(--green-light); border-left: 4px solid var(--green); border-radius: 0 var(--radius) var(--radius) 0; padding: 16px 20px; margin: 20px 0; font-size: .92rem; }
+    .warn-box  { background: var(--orange-light); border-left: 4px solid var(--orange); border-radius: 0 var(--radius) var(--radius) 0; padding: 16px 20px; margin: 20px 0; font-size: .92rem; }
+
+    .related-links { display: grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap: 12px; margin: 20px 0; }
+    .rl-card { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px; border-top: 3px solid var(--pink); }
+    .rl-card a { color: var(--text); font-weight: 600; font-size: .88rem; }
+    .rl-card p { font-size: .78rem; color: var(--text-light); margin: 4px 0 0; }
+
+    .ad-slot { background: #f5f5f5; border-radius: 8px; padding: 8px; text-align: center; margin: 24px 0; min-height: 90px; }
+
+    footer { background: var(--purple-light); padding: 24px 16px; text-align: center; font-size: .78rem; color: var(--text-light); }
+    footer .disclaimer { background: var(--white); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; line-height: 1.6; }
+    footer a { color: var(--purple); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>妊娠確率とは？<br>排卵日・年齢・タイミング別の目安を解説</h1>
+  <p>「どのくらいの確率で妊娠できるの？」を数字でわかりやすく</p>
+</header>
+
+<div class="breadcrumb">
+  <a href="https://ninshin-kakuritsu.vercel.app/">妊娠確率計算ツール</a> &gt; 妊娠確率とは
+</div>
+
+<main>
+
+  <div class="summary-box">
+    <p>健康な夫婦が1周期（1ヶ月）でタイミングを合わせたときの妊娠確率は<strong>約15〜25%</strong>とされています（WHO基準）。これは排卵日・年齢・タイミングの日数によって大きく変わります。</p>
+  </div>
+
+  <nav class="toc">
+    <h2>目次</h2>
+    <ol>
+      <li><a href="#per-cycle">1周期あたりの妊娠確率</a></li>
+      <li><a href="#timing">排卵日との関係：日ごとの確率差</a></li>
+      <li><a href="#age">年齢別の妊娠確率</a></li>
+      <li><a href="#cumulative">何周期試せば妊娠できる？</a></li>
+      <li><a href="#improve">確率を上げるためにできること</a></li>
+    </ol>
+  </nav>
+
+  <div class="ad-slot">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3985655020038392" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <h2 id="per-cycle">1周期あたりの妊娠確率</h2>
+  <p>「1回のタイミングで妊娠する確率は？」と気になる方は多いですが、実際には<strong>1周期あたり約15〜25%</strong>が医学的な目安です。</p>
+  <p>裏を返すと、タイミングが合っていても<strong>75〜85%は妊娠しない</strong>ということ。「何周期やっても妊娠しない」と焦る方も多いですが、これは正常な範囲です。</p>
+
+  <table class="cycle-table">
+    <thead><tr><th>指標</th><th>目安</th></tr></thead>
+    <tbody>
+      <tr><td>1周期あたりの妊娠確率</td><td>約15〜25%</td></tr>
+      <tr><td>6周期以内に妊娠する割合</td><td>約72%</td></tr>
+      <tr><td>12周期以内に妊娠する割合</td><td>約85%</td></tr>
+      <tr><td>2年以内に妊娠できない割合</td><td>約10〜15%（不妊の定義）</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    ✅ <strong>1年間妊娠しなければ「不妊」の可能性も</strong><br>
+    WHO・日本産科婦人科学会では、定期的にタイミングをとって1年で妊娠しない場合を「不妊症」と定義しています。35歳以上は6ヶ月を目安に産婦人科を受診するのがおすすめです。
+  </div>
+
+  <h2 id="timing">排卵日との関係：日ごとの確率差</h2>
+  <p>妊娠確率が最も大きく変わるのが<strong>排卵日との日数差</strong>です。精子は体内で2〜5日生存できるため、排卵日の数日前からタイミングをとることが重要です。</p>
+
+  <div class="timing-chart">
+    <div class="timing-row">
+      <div class="timing-day">排卵日5日前</div>
+      <div class="timing-bar-wrap"><div class="timing-bar" style="width:15%;background:var(--green);">5%</div></div>
+      <div class="timing-pct">5%</div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-day">排卵日4日前</div>
+      <div class="timing-bar-wrap"><div class="timing-bar" style="width:30%;background:var(--green);">10%</div></div>
+      <div class="timing-pct">10%</div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-day">排卵日3日前</div>
+      <div class="timing-bar-wrap"><div class="timing-bar" style="width:45%;background:var(--orange);">15%</div></div>
+      <div class="timing-pct">15%</div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-day">排卵日2日前</div>
+      <div class="timing-bar-wrap"><div class="timing-bar" style="width:75%;background:var(--orange);">25%</div></div>
+      <div class="timing-pct">25%</div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-day">排卵日1日前</div>
+      <div class="timing-bar-wrap"><div class="timing-bar" style="width:100%;background:var(--pink);">33% ◀ ピーク</div></div>
+      <div class="timing-pct">33%</div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-day">排卵日当日</div>
+      <div class="timing-bar-wrap"><div class="timing-bar" style="width:82%;background:var(--pink);">27%</div></div>
+      <div class="timing-pct">27%</div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-day">排卵日1日後</div>
+      <div class="timing-bar-wrap"><div class="timing-bar" style="width:24%;background:var(--purple);">8%</div></div>
+      <div class="timing-pct">8%</div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-day">排卵日2日後〜</div>
+      <div class="timing-bar-wrap"><div class="timing-bar" style="width:9%;background:#ccc;">3%</div></div>
+      <div class="timing-pct">〜3%</div>
+    </div>
+  </div>
+
+  <p><strong>最もおすすめのタイミングは排卵日の1〜2日前</strong>です。排卵日当日は既に卵子が老化し始めているため、直前〜当日が黄金期と言えます。</p>
+
+  <div class="cta-box">
+    <p>自分のタイミングで妊娠確率を計算してみる</p>
+    <a class="cta-btn" href="https://ninshin-kakuritsu.vercel.app/">妊娠確率を計算する →</a>
+  </div>
+
+  <div class="ad-slot">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3985655020038392" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <h2 id="age">年齢別の妊娠確率</h2>
+  <p>年齢は妊娠確率に大きく影響します。卵子の質は加齢とともに低下するため、<strong>35歳以上からは自然妊娠の確率が顕著に下がります</strong>。</p>
+
+  <table class="age-table">
+    <thead><tr><th>年齢</th><th>1周期あたりの目安</th><th>補正イメージ</th></tr></thead>
+    <tbody>
+      <tr><td>20〜24歳</td><td>約25%（最も高い）</td><td><span class="bar-mini" style="width:100px;background:var(--pink)"></span></td></tr>
+      <tr><td>25〜29歳</td><td>約23%</td><td><span class="bar-mini" style="width:92px;background:var(--pink)"></span></td></tr>
+      <tr><td>30〜34歳</td><td>約20%</td><td><span class="bar-mini" style="width:80px;background:var(--orange)"></span></td></tr>
+      <tr><td>35〜39歳</td><td>約15%</td><td><span class="bar-mini" style="width:60px;background:var(--orange)"></span></td></tr>
+      <tr><td>40〜44歳</td><td>約10%</td><td><span class="bar-mini" style="width:40px;background:var(--green)"></span></td></tr>
+      <tr><td>45歳以上</td><td>約5%以下</td><td><span class="bar-mini" style="width:20px;background:#ccc"></span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    ⚠️ <strong>35歳を超えたら早めに動くことが大切</strong><br>
+    35歳以上は「高齢出産」とされ、流産リスクも上がります。タイミングを試して6ヶ月以内に妊娠しない場合は、早めに産婦人科・不妊専門クリニックへの相談を検討しましょう。
+  </div>
+
+  <h2 id="cumulative">何周期試せば妊娠できる？</h2>
+  <p>1周期あたり20%の確率だとすると、累積の妊娠確率は以下のように積み上がります。</p>
+
+  <table class="cycle-table">
+    <thead><tr><th>試みた周期数</th><th>累積妊娠確率（目安）</th></tr></thead>
+    <tbody>
+      <tr><td>1周期</td><td>約20%</td></tr>
+      <tr><td>3周期</td><td>約49%</td></tr>
+      <tr><td>6周期</td><td>約74%</td></tr>
+      <tr><td>12周期（1年）</td><td>約93%</td></tr>
+    </tbody>
+  </table>
+
+  <p>半年（6周期）試して妊娠しなくても、<strong>まだ26%の人は妊娠していない</strong>計算です。「なかなか妊娠しない＝異常」ではありません。ただし年齢が高い場合や何らかの不安がある場合は早めに相談しましょう。</p>
+
+  <h2 id="improve">確率を上げるためにできること</h2>
+  <ul style="padding-left:20px;font-size:.95rem;">
+    <li style="margin-bottom:10px;"><strong>排卵日を正確に把握する</strong>：排卵検査薬・基礎体温・超音波検査の組み合わせが最も確実</li>
+    <li style="margin-bottom:10px;"><strong>排卵日1〜2日前にタイミングをとる</strong>：当日より前日〜2日前が確率のピーク</li>
+    <li style="margin-bottom:10px;"><strong>葉酸・亜鉛・ビタミンDを摂る</strong>：卵子の質・精子の質に関わる栄養素</li>
+    <li style="margin-bottom:10px;"><strong>体重・睡眠・ストレスを管理する</strong>：排卵の乱れに直結する</li>
+    <li style="margin-bottom:10px;"><strong>禁煙・節酒</strong>：喫煙は妊娠率を約40%低下させるとされる</li>
+  </ul>
+
+  <div class="ad-slot">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3985655020038392" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <h2>関連ツール・記事</h2>
+  <div class="related-links">
+    <div class="rl-card">
+      <div>🌸</div>
+      <a href="https://ninshin-kakuritsu.vercel.app/">妊娠確率計算ツール</a>
+      <p>タイミング×年齢で今周期の確率を計算</p>
+    </div>
+    <div class="rl-card">
+      <div>📆</div>
+      <a href="https://hairan-keisan.vercel.app/">排卵日計算ツール</a>
+      <p>生理周期から排卵日・妊娠可能期間を計算</p>
+    </div>
+    <div class="rl-card">
+      <div>🔬</div>
+      <a href="https://kentai-timing.vercel.app/">妊娠検査薬タイミング判定</a>
+      <p>フライング検査・確実判定日を自動計算</p>
+    </div>
+    <div class="rl-card">
+      <div>🌡️</div>
+      <a href="https://hairan-keisan.vercel.app/kiso-taion/">基礎体温で排卵日を知る</a>
+      <p>低温期・高温期の見方と排卵日の特定方法</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="disclaimer">
+    ※ 本サイトの情報は一般的な知識の提供を目的としており、医療アドバイスではありません。<br>
+    妊活・不妊治療については専門の医師・産婦人科にご相談ください。<br>
+    参考：<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kodomo/kodomo_kosodate/boshi-hoken/" target="_blank" rel="noopener">厚生労働省 母子保健</a>
+    ／<a href="https://www.jsog.or.jp/" target="_blank" rel="noopener">日本産科婦人科学会</a>
+  </div>
+  <p>© 2026 妊娠確率計算ツール</p>
+</footer>
+
+</body>
+</html>
